@@ -27,8 +27,8 @@ management:
 resilience4j:
   circuitbreaker:
     configs:
-    default:
-      registerHealthIndicator: true
+      default:
+        registerHealthIndicator: true
     instances:
       ratingBreaker:
        # registerHealthIndicator: true
