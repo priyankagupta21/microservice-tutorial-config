@@ -1,77 +1,8 @@
-spring:
-  application:
-    name: USER-SERVICE
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: https://dev-36074028.okta.com/oauth2/default
-      client:
-         registration:
-               my-internal-client:
-                         provider: okta
-                         authorization-grant-type: client_credntials
-                         scope: internal
-                         client-id: 0oaazp4pyfhS0xRJN5d7
-                         client-secret: 6ccAAr66incOf7w7dLD2QK4ddTBnmeFR1qpa25Gb
-         provider:
-          okta:
-           issuer-uri: https://dev-36074028.okta.com/oauth2/default
-server:
-   port: 9091
 eureka:
-  client:
-    fetch-registry: true
+   instance:
+    prefer-ip-address: true
+   client:
     register-with-eureka: true
+    fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka
-  instance:
-    prefer-ip-address: true
-  
-    
-management:
-   health:
-      circuitbreaker:
-         enabled: true
-      endpoints:
-         web:
-           exposure:
-              include: health              
-   endpoint: 
-          health:
-             show-details: always
-             
-resilience4j:
-  circuitbreaker:
-    configs:
-      default:
-        registerHealthIndicator: true
-    instances:
-      ratingBreaker:
-       # registerHealthIndicator: true
-        eventConsumerBufferSize: 10
-        failureRateThreshold: 50
-        minimumNumberOfCalls: 5
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-        waitDurationInOpenState: 6s
-        permittedNumberOfCallsInHalfOpenState: 3
-        slidingWindowSize: 10
-        slidingWindowType: COUNT_BASED
-  retry:
-     instances:
-        ratingRetry:
-          max-attempts: 3
-          wait-duration: 5s
-
-  ratelimiter:
-    instances:
-       userRateLimiter:
-         limit-refresh-period: 4s
-         limit-for-period: 2
-         timeout-duration: 0s
-
-okta:
-  oauth2:
-    issuer: https://dev-36074028.okta.com/oauth2/default
-    audience: api://default
-    
